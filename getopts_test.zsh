@@ -2,10 +2,10 @@
 
 : before
 {
-    source $ZPLUG_ROOT/lib/cli/getopts.zsh
+    source $PWD/getopts.zsh
 }
 
-describe "lib/cli/getopts.zsh"
+describe "getopts.zsh"
     it "only bare"
         out="$(getopts beer)"
         ret=$status
