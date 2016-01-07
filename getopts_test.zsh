@@ -17,7 +17,7 @@ describe "getopts.zsh"
         expects=( "_ bar" "_ beer" )
         actuals=( "${(@f)"$(getopts bar beer)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -25,7 +25,7 @@ describe "getopts.zsh"
         expects=( "_ beer" "foo" )
         actuals=( "${(@f)"$(getopts beer --foo)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -33,7 +33,7 @@ describe "getopts.zsh"
         expects=( "_ foo" "_ bar" "_ baz" "_ quux" )
         actuals=( "${(@f)"$(getopts foo bar baz quux)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -41,7 +41,7 @@ describe "getopts.zsh"
         expects=( "a" "b 42" "_ beer" "foo" "bar" )
         actuals=( "${(@f)"$(getopts beer -ab42 beer --foo --bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -49,7 +49,7 @@ describe "getopts.zsh"
         expects=( "f" "o" "o 42" )
         actuals=( "${(@f)"$(getopts -foo42)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -57,7 +57,7 @@ describe "getopts.zsh"
         expects=( "a" "b" "c" "x" "y" "z" )
         actuals=( "${(@f)"$(getopts -abc -xyz)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -65,7 +65,7 @@ describe "getopts.zsh"
         expects=( "a" "b" "c bar" )
         actuals=( "${(@f)"$(getopts -abc bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -73,15 +73,15 @@ describe "getopts.zsh"
         expects=( "a bar" )
         actuals=( "${(@f)"$(getopts -a bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
     it "single w/ value and bare"
-        expects=( "a" "b" "c" "./" "_ bar" )
+        expects=( "a" "b" "c ./" "_ bar" )
         actuals=( "${(@f)"$(getopts -abc./ bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -89,7 +89,7 @@ describe "getopts.zsh"
         expects=( "a" "b" "c" "foo" )
         actuals=( "${(@f)"$(getopts -abc --foo)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -97,7 +97,7 @@ describe "getopts.zsh"
         expects=( "foo" )
         actuals=( "${(@f)"$(getopts --foo)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -105,7 +105,7 @@ describe "getopts.zsh"
         expects=( "foo bar" )
         actuals=( "${(@f)"$(getopts --foo=bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -113,7 +113,7 @@ describe "getopts.zsh"
         expects=( "foo bar !" )
         actuals=( "${(@f)"$(getopts --foo!=bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -121,7 +121,7 @@ describe "getopts.zsh"
         expects=( "foo bar" "bar foo" )
         actuals=( "${(@f)"$(getopts --foo=bar --bar=foo)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -129,7 +129,7 @@ describe "getopts.zsh"
         expects=( "foo bar" "_ beer" )
         actuals=( "${(@f)"$(getopts --foo=bar beer)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -137,7 +137,7 @@ describe "getopts.zsh"
         expects=( "foo" "bar" )
         actuals=( "${(@f)"$(getopts --foo --bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -145,7 +145,7 @@ describe "getopts.zsh"
         expects=( "foo-bar-baz" )
         actuals=( "${(@f)"$(getopts --foo-bar-baz)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -153,7 +153,7 @@ describe "getopts.zsh"
         expects=( "foo" "a" "b" "c" )
         actuals=( "${(@f)"$(getopts --foo -abc)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -161,15 +161,15 @@ describe "getopts.zsh"
         expects=( "foo" "bar" "secret 42" "_ baz" )
         actuals=( "${(@f)"$(getopts --foo --bar --secret=42 baz)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
     it "single double single w/ remaining bares"
-        expects=( "f" "o" "o" "bar" "b" "a" "r norf" "_ baz" "_ quux")
+        expects=( "f" "o" "o" "bar" "b" "a" "r norf" "_ baz" "_ quux" )
         actuals=( "${(@f)"$(getopts -foo --bar -bar norf baz quux)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -177,7 +177,7 @@ describe "getopts.zsh"
         expects=( "_ --foo" "_ bar" )
         actuals=( "${(@f)"$(getopts -- --foo bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -185,7 +185,7 @@ describe "getopts.zsh"
         expects=( "a" "_ --foo" "_ bar" )
         actuals=( "${(@f)"$(getopts -a -- --foo bar)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -193,7 +193,7 @@ describe "getopts.zsh"
         expects=( "foo bar" "_ baz" "_ foo" "_ --foo" )
         actuals=( "${(@f)"$(getopts --foo=bar baz -- foo --foo)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -201,7 +201,7 @@ describe "getopts.zsh"
         expects=( "f Fee fi fo fum" )
         actuals=( "${(@f)"$(getopts -f "Fee fi fo fum")"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -209,7 +209,7 @@ describe "getopts.zsh"
         expects=( "f" )
         actuals=( "${(@f)"$(getopts -f "")"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -217,7 +217,7 @@ describe "getopts.zsh"
         expects=( "foo" )
         actuals=( "${(@f)"$(getopts --foo "")"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 
@@ -225,7 +225,7 @@ describe "getopts.zsh"
         expects=( "x" )
         actuals=( "${(@f)"$(getopts -xxx | xargs)"}" )
         ret=$status
-        array --a $expects --b $actuals
+        array "==" --a $expects --b $actuals
         assert equal "$ret" "0"
     end
 end
